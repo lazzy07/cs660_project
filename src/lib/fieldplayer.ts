@@ -65,7 +65,6 @@ export default class FieldPlayer extends Player {
     console.log(
       this.getData().name + " is defending " + playerToDefend.getData().name
     );
-    this.goToPosition(playerToDefend.getPosition());
 
     this.app.ticker.add((delta) => {
       if (this.state === "defend") {
@@ -88,14 +87,10 @@ export default class FieldPlayer extends Player {
   }
 
   goToPosition(position: Position) {
-    console.log(
-      this.getData().name +
-        " is going to position " +
-        position.x +
-        " " +
-        position.y
-    );
-    this.state = "idle";
     this.target = position;
+  }
+
+  clearState() {
+    this.state = "idle";
   }
 }

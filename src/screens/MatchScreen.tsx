@@ -13,6 +13,7 @@ export default function MatchScreen() {
   let [variables, setVariables] = useState<any>({});
 
   const setVar = (name: string, value: any) => {
+    console.log("setting variable", name, value);
     setVariables({ ...variables, [name]: value });
   };
 
