@@ -1,0 +1,5 @@
+export type POSITION_TYPE =
+  | "GOALKEEPER"
+  | "DEFENDER"
+  | "MIDFIELDER"
+  | "STRIKER";
