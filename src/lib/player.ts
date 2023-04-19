@@ -13,8 +13,8 @@ export default class Player {
   private team: Team;
   private opponentTeam: Team;
   private data: PlayerData;
-  private target: Position;
-  private ball: Ball;
+  target: Position;
+  ball: Ball;
 
   constructor(
     app: Application,
@@ -77,6 +77,7 @@ export default class Player {
           this.ball.getPosition().y > this.position.y - radius &&
           this.ball.getPosition().y < this.position.y + radius
         ) {
+          console.log(this.data.name + " claims the ball");
           this.ball.setOwner(this);
         }
       }
@@ -85,7 +86,6 @@ export default class Player {
 
   passBall(player: Player) {
     this.ball.setOwner(null);
-
     this.ball.setTarget(player.getPosition());
   }
 

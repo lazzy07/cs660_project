@@ -1,3 +1,5 @@
+import { isLarger } from "./helper";
+import Position from "./interface/position";
 import Player from "./player";
 
 export default class FieldPlayer extends Player {
@@ -5,6 +7,13 @@ export default class FieldPlayer extends Player {
 
   cutPassingLane(player1: Player, player2: Player) {
     this.state = "cutPassingLane";
+    console.log(
+      this.getData().name +
+        " is cutting the passing lane " +
+        player1.getData().name +
+        " and " +
+        player2.getData().name
+    );
 
     this.app.ticker.add((delta) => {
       if (this.state === "cutPassingLane") {
@@ -17,8 +26,45 @@ export default class FieldPlayer extends Player {
     });
   }
 
+  tackle(player: Player) {
+    this.state = "tackle";
+    const radius = 20;
+
+    if (this.ball.getOwner() === player) {
+      if (
+        this.getPosition().x > player.getPosition().x - radius &&
+        this.getPosition().x < player.getPosition().x + radius
+      ) {
+        if (
+          this.getPosition().y > player.getPosition().y - radius &&
+          this.getPosition().y < player.getPosition().y + radius
+        ) {
+          if (isLarger(this.getData().defence)) {
+            console.log(this.getData().name + " tackled the ball");
+            this.ball.setOwner(this);
+          } else {
+            console.log(this.getData().name + " failed to tackle the ball");
+          }
+        } else {
+          console.log(this.getData().name + " failed to tackle the ball");
+        }
+      } else {
+        console.log(
+          "The ball is not owned by " +
+            player.getData().name +
+            " so " +
+            this.getData().name +
+            " can't tackle the ball"
+        );
+      }
+    }
+  }
+
   defend(playerToDefend: Player) {
     this.state = "defend";
+    console.log(
+      this.getData().name + " is defending " + playerToDefend.getData().name
+    );
     this.goToPosition(playerToDefend.getPosition());
 
     this.app.ticker.add((delta) => {
@@ -29,5 +75,27 @@ export default class FieldPlayer extends Player {
         });
       }
     });
+  }
+
+  shoot() {
+    // if(this.ball.getOwner() === this) {
+    //   this.state = "shoot";
+    //   this.ball.setTarget({
+    //     x: this.position.x + 100,
+    //     y: this.position.y + 100,
+    //   });
+    // }
+  }
+
+  goToPosition(position: Position) {
+    console.log(
+      this.getData().name +
+        " is going to position " +
+        position.x +
+        " " +
+        position.y
+    );
+    this.state = "idle";
+    this.target = position;
   }
 }

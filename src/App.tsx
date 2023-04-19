@@ -3,7 +3,12 @@ import MatchScreen from "./screens/MatchScreen";
 
 function App() {
   return (
-    <div className="App">
+    <div
+      style={{
+        fontFamily: "sans-serif",
+      }}
+      className="App"
+    >
       <MatchScreen />
     </div>
   );

@@ -29,15 +29,15 @@ export default class Match {
 
     this.ball.setOwner(this.team1.getPlayer(9)!);
 
-    this.team1.getPlayer(4)!.defend(this.team2.getPlayer(23)!);
+    // this.team1.getPlayer(4)!.defend(this.team2.getPlayer(23)!);
 
-    this.team1
-      .getPlayer(20)
-      ?.cutPassingLane(this.team2.getPlayer(11)!, this.team2.getPlayer(10)!);
+    // this.team1
+    //   .getPlayer(20)
+    //   ?.cutPassingLane(this.team2.getPlayer(11)!, this.team2.getPlayer(10)!);
 
-    setTimeout(() => {
-      this.team1.getPlayer(9)!.passBall(this.team2.getPlayer(23)!);
-    }, 3000);
+    // setTimeout(() => {
+    //   this.team1.getPlayer(9)!.passBall(this.team2.getPlayer(23)!);
+    // }, 3000);
   }
 
   init() {
@@ -90,10 +90,5 @@ export default class Match {
 
     this.team1.setPlayers(team1);
     this.team2.setPlayers(team2);
-  }
-
-  passBall(player: FieldPlayer) {
-    this.ball.setOwner(null);
-    this.ball.setTarget(player.getPosition());
   }
 }
