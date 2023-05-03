@@ -4,6 +4,8 @@ import Team from "./team";
 import PlayerData from "./interface/playerdata";
 import { initialPostions } from "./data/initialpositions";
 import Ball from "./ball";
+import { POSITION_TYPE } from "./interface/positiontypes";
+import { Stats } from "./interface/stats";
 
 export default class Player {
   app: Application;
@@ -15,6 +17,15 @@ export default class Player {
   private data: PlayerData;
   target: Position;
   ball: Ball;
+  private stuckCount: number = 0;
+  stats: Stats = {
+    goals: 0,
+    passesRecieved: 0,
+    passesCompleted: 0,
+    passesFailed: 0,
+    shots: 0,
+    interceptions: 0,
+  };
 
   constructor(
     app: Application,
@@ -41,21 +52,51 @@ export default class Player {
     this.app.ticker.add((delta) => {
       const x =
         this.position.x +
-        (this.target.x - this.position.x) * 0.008 * (this.data.speed / 100);
+        (this.target.x - this.position.x) *
+          (this.data.speed / 100) *
+          delta *
+          0.01;
       const y =
         this.position.y +
-        (this.target.y - this.position.y) * 0.008 * (this.data.speed / 100);
+        (this.target.y - this.position.y) *
+          (this.data.speed / 100) *
+          delta *
+          0.01;
 
-      this.position = {
-        x,
-        y,
-      };
+      if (
+        this.position.x < this.target.x - 3 ||
+        this.position.x > this.target.x + 3 ||
+        this.position.y < this.target.y - 3 ||
+        this.position.y > this.target.y + 3
+      ) {
+        this.position = {
+          x,
+          y,
+        };
+      }
 
       this.container.x = this.position.x;
       this.container.y = this.position.y;
 
       this.claimBall();
     });
+  }
+
+  toJSON() {
+    return {
+      id: this.data.id,
+      name: this.data.name,
+      position: this.data.position,
+      stats: this.stats,
+    };
+  }
+
+  getOpponentTeam() {
+    return this.opponentTeam;
+  }
+
+  getTeam() {
+    return this.team;
   }
 
   getData() {
@@ -66,9 +107,37 @@ export default class Player {
     return this.position;
   }
 
+  setPosition(position: Position) {
+    this.position = position;
+    this.target = position;
+  }
+
   claimBall() {
-    const radius = 7;
-    if (this.ball.getOwner() === null) {
+    const prevOwner = this.ball.getPreviousOwner();
+
+    if (this.stuckCount > 300) {
+      const players = Array.from(this.team.getPlayers().values());
+      const randomPlayer = players[Math.floor(Math.random() * players.length)];
+      this.ball.setOwner(randomPlayer);
+    }
+
+    if (prevOwner) {
+      if (
+        Math.abs(prevOwner.getPosition().x - this.position.x) < 20 &&
+        Math.abs(prevOwner.getPosition().y - this.position.y) < 20
+      ) {
+        this.stuckCount++;
+        return;
+      }
+    }
+
+    this.stuckCount = 0;
+
+    const radius = 10;
+    if (
+      this.ball.getOwner() === null &&
+      this.ball.getPreviousOwner() !== this
+    ) {
       if (
         this.ball.getPosition().x > this.position.x - radius &&
         this.ball.getPosition().x < this.position.x + radius
@@ -79,18 +148,55 @@ export default class Player {
         ) {
           console.log(this.data.name + " claims the ball");
           this.ball.setOwner(this);
+          const prevOwner = this.ball.getPreviousOwner();
+          if (prevOwner !== null) {
+            if (this.getTeam() === prevOwner.getTeam()) {
+              prevOwner.stats.passesCompleted++;
+              this.stats.passesRecieved++;
+            } else {
+              this.stats.interceptions++;
+              prevOwner.stats.passesFailed++;
+            }
+          }
         }
       }
     }
   }
 
   passBall(player: Player) {
+    if (player === this) return;
     this.ball.setOwner(null);
     this.ball.setTarget(player.getPosition());
   }
 
+  longPassBall(player: Player) {
+    this.ball.setOwner(null);
+    this.ball.setTarget(player.getPosition());
+    this.ball.setOnAir(true);
+  }
+
   goToPosition(position: Position) {
     this.target = position;
+  }
+
+  getDistanceToBall() {
+    const x = this.ball.getPosition().x - this.position.x;
+    const y = this.ball.getPosition().y - this.position.y;
+
+    return Math.sqrt(x * x + y * y);
+  }
+
+  getDistanceToTheOwnerOfBall() {
+    const owner = this.ball.getOwner();
+
+    if (owner === null) {
+      return 1000;
+    } else {
+      const x = owner.getPosition().x - this.position.x;
+      const y = owner.getPosition().y - this.position.y;
+
+      return Math.sqrt(x * x + y * y);
+    }
   }
 
   init() {
@@ -117,5 +223,60 @@ export default class Player {
     this.container.addChild(graphics);
     this.container.addChild(basicText);
     this.app.stage.addChild(this.container);
+  }
+
+  isPassingLaneClear(player: Player) {
+    let opponents = Array.from(this.opponentTeam.getPlayers().values());
+
+    let passingLaneClear = true;
+
+    const currPlayerToPasser = Math.sqrt(
+      Math.pow(player.getPosition().x - this.position.x, 2) +
+        Math.pow(player.getPosition().y - this.position.y, 2)
+    );
+    opponents.forEach((opponent) => {
+      const playerToOpponent = Math.sqrt(
+        Math.pow(opponent.getPosition().x - this.position.x, 2) +
+          Math.pow(opponent.getPosition().y - this.position.y, 2)
+      );
+
+      const opponentToPasser = Math.sqrt(
+        Math.pow(opponent.getPosition().x - player.getPosition().x, 2) +
+          Math.pow(opponent.getPosition().y - player.getPosition().y, 2)
+      );
+
+      if (
+        Math.abs(playerToOpponent + opponentToPasser - currPlayerToPasser) < 10
+      ) {
+        passingLaneClear = false;
+      }
+    });
+
+    return passingLaneClear;
+  }
+
+  sortPlayersByDistance(position?: POSITION_TYPE) {
+    let players = Array.from(this.team.getPlayers().values()).filter(
+      (player) => {
+        if (position) {
+          return player.getData().position_type === position;
+        } else {
+          return true;
+        }
+      }
+    );
+
+    return players.sort((a, b) => {
+      return (
+        Math.sqrt(
+          Math.pow(a.getPosition().x - this.position.x, 2) +
+            Math.pow(a.getPosition().y - this.position.y, 2)
+        ) -
+        Math.sqrt(
+          Math.pow(b.getPosition().x - this.position.x, 2) +
+            Math.pow(b.getPosition().y - this.position.y, 2)
+        )
+      );
+    });
   }
 }

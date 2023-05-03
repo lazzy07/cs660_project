@@ -1,0 +1,274 @@
+{
+  "team1": {
+    "teamName": "team1",
+    "score": 0,
+    "players": [
+      {
+        "id": 20,
+        "name": "Vinicius Jr",
+        "position": "LW",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 16,
+          "passesCompleted": 14,
+          "passesFailed": 6,
+          "shots": 0,
+          "interceptions": 4
+        }
+      },
+      {
+        "id": 9,
+        "name": "Benzema",
+        "position": "ST",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 15,
+          "passesCompleted": 19,
+          "passesFailed": 5,
+          "shots": 0,
+          "interceptions": 8
+        }
+      },
+      {
+        "id": 15,
+        "name": "Valverde",
+        "position": "RW",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 33,
+          "passesCompleted": 28,
+          "passesFailed": 8,
+          "shots": 0,
+          "interceptions": 4
+        }
+      },
+      {
+        "id": 8,
+        "name": "Kroos",
+        "position": "LCM",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 24,
+          "passesCompleted": 28,
+          "passesFailed": 6,
+          "shots": 0,
+          "interceptions": 10
+        }
+      },
+      {
+        "id": 14,
+        "name": "Casemiro",
+        "position": "CM",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 20,
+          "passesCompleted": 25,
+          "passesFailed": 5,
+          "shots": 0,
+          "interceptions": 11
+        }
+      },
+      {
+        "id": 10,
+        "name": "Modric",
+        "position": "RCM",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 32,
+          "passesCompleted": 32,
+          "passesFailed": 9,
+          "shots": 0,
+          "interceptions": 9
+        }
+      },
+      {
+        "id": 23,
+        "name": "Mendy",
+        "position": "LB",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 12,
+          "passesCompleted": 10,
+          "passesFailed": 2,
+          "shots": 0,
+          "interceptions": 0
+        }
+      },
+      {
+        "id": 4,
+        "name": "Alaba",
+        "position": "LCB",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 17,
+          "passesCompleted": 15,
+          "passesFailed": 2,
+          "shots": 0,
+          "interceptions": 0
+        }
+      },
+      {
+        "id": 3,
+        "name": "Militao",
+        "position": "RCB",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 9,
+          "passesCompleted": 8,
+          "passesFailed": 2,
+          "shots": 0,
+          "interceptions": 0
+        }
+      },
+      {
+        "id": 2,
+        "name": "Carvajal",
+        "position": "RB",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 7,
+          "passesCompleted": 6,
+          "passesFailed": 1,
+          "shots": 0,
+          "interceptions": 0
+        }
+      }
+    ]
+  },
+  "team2": {
+    "teamName": "team2",
+    "score": 0,
+    "players": [
+      {
+        "id": 23,
+        "name": "Diaz",
+        "position": "LW",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 13,
+          "passesCompleted": 8,
+          "passesFailed": 7,
+          "shots": 0,
+          "interceptions": 2
+        }
+      },
+      {
+        "id": 10,
+        "name": "Mane",
+        "position": "ST",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 14,
+          "passesCompleted": 18,
+          "passesFailed": 8,
+          "shots": 0,
+          "interceptions": 12
+        }
+      },
+      {
+        "id": 11,
+        "name": "Salah",
+        "position": "RW",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 11,
+          "passesCompleted": 13,
+          "passesFailed": 3,
+          "shots": 0,
+          "interceptions": 5
+        }
+      },
+      {
+        "id": 6,
+        "name": "Alcantara",
+        "position": "LCM",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 12,
+          "passesCompleted": 14,
+          "passesFailed": 3,
+          "shots": 0,
+          "interceptions": 6
+        }
+      },
+      {
+        "id": 3,
+        "name": "Fabinho",
+        "position": "CM",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 13,
+          "passesCompleted": 16,
+          "passesFailed": 7,
+          "shots": 0,
+          "interceptions": 8
+        }
+      },
+      {
+        "id": 14,
+        "name": "Henderson",
+        "position": "RCM",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 19,
+          "passesCompleted": 21,
+          "passesFailed": 7,
+          "shots": 0,
+          "interceptions": 11
+        }
+      },
+      {
+        "id": 26,
+        "name": "Robertson",
+        "position": "LB",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 12,
+          "passesCompleted": 7,
+          "passesFailed": 5,
+          "shots": 0,
+          "interceptions": 0
+        }
+      },
+      {
+        "id": 4,
+        "name": "Van Dijk",
+        "position": "LCB",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 8,
+          "passesCompleted": 5,
+          "passesFailed": 2,
+          "shots": 0,
+          "interceptions": 0
+        }
+      },
+      {
+        "id": 5,
+        "name": "Konate",
+        "position": "RCB",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 9,
+          "passesCompleted": 11,
+          "passesFailed": 1,
+          "shots": 0,
+          "interceptions": 2
+        }
+      },
+      {
+        "id": 66,
+        "name": "Alexander-Arnold",
+        "position": "RB",
+        "stats": {
+          "goals": 0,
+          "passesRecieved": 4,
+          "passesCompleted": 2,
+          "passesFailed": 3,
+          "shots": 0,
+          "interceptions": 0
+        }
+      }
+    ]
+  }
+}

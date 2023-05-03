@@ -1,0 +1,8 @@
+export type ZONE_TYPES =
+  | "DEFENCE_LEFT"
+  | "DEFENCE_RIGHT"
+  | "DEFENCE"
+  | "MIDFIELD"
+  | "ATTACK_LEFT"
+  | "ATTACK_RIGHT"
+  | "ATTACK";

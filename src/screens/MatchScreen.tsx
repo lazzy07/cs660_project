@@ -11,6 +11,7 @@ export default function MatchScreen() {
   let [input, setInput] = useState("");
   let [commands, setCommands] = useState<string[]>([]);
   let [variables, setVariables] = useState<any>({});
+  let [json, setJson] = useState<string>("");
 
   const setVar = (name: string, value: any) => {
     console.log("setting variable", name, value);
@@ -19,8 +20,8 @@ export default function MatchScreen() {
 
   const startMatch = () => {
     if (match) {
-      console.log("starting match");
       startCountdown();
+      match.setGameStarted(true);
     }
   };
 
@@ -57,43 +58,50 @@ export default function MatchScreen() {
     }
   };
 
+  const toJSON = () => {
+    setJson(JSON.stringify(match!.toJSON(), null, 2));
+  };
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-      }}
-    >
-      <div ref={divElement} />
-      <div style={{ padding: 30 }}>
-        <div style={{ fontSize: 30 }}>
-          <Countdown
-            ref={timerRef}
-            autoStart={false}
-            date={Date.now() + 480000}
+    <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <div ref={divElement} />
+        <div style={{ padding: 30 }}>
+          <div style={{ fontSize: 30 }}>
+            <Countdown
+              ref={timerRef}
+              autoStart={false}
+              date={Date.now() + 300000}
+            />
+          </div>
+          <div
+            style={{
+              minHeight: 500,
+              width: 600,
+              overflow: "scroll",
+              border: "1px solid black",
+              padding: 10,
+            }}
+          >
+            {commands.map((command, index) => (
+              <div key={index}>{command}</div>
+            ))}
+          </div>
+          <input
+            style={{ width: 400 }}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
           />
+          <button onClick={() => executeCommand()}>Send</button>
         </div>
-        <div
-          style={{
-            minHeight: 500,
-            width: 600,
-            overflow: "scroll",
-            border: "1px solid black",
-            padding: 10,
-          }}
-        >
-          {commands.map((command, index) => (
-            <div key={index}>{command}</div>
-          ))}
-        </div>
-        <input
-          style={{ width: 400 }}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <button onClick={() => executeCommand()}>Send</button>
       </div>
+      {json && <div>{json}</div>}
     </div>
   );
 }
