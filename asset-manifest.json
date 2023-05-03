@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/cs660_project/static/js/main.a81f474b.js",
+    "static/js/787.c1112931.chunk.js": "/cs660_project/static/js/787.c1112931.chunk.js",
+    "index.html": "/cs660_project/index.html",
+    "main.a81f474b.js.map": "/cs660_project/static/js/main.a81f474b.js.map",
+    "787.c1112931.chunk.js.map": "/cs660_project/static/js/787.c1112931.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.a81f474b.js"
+  ]
+}
